@@ -1,1 +1,9 @@
 This is my Vim config
+
+Replace CAPSLOCK as ESC :
+xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+
+
+cd
+git clone git@github.com:yenda/vimconfig.git .vim
+echo "runtime vimrc" > .vimrc
