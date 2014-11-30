@@ -1,7 +1,28 @@
-execute pathogen#infect()
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+Plugin 'klen/python-mode'
+Plugin 'lokaltog/powerline'
+Plugin 'scrooloose/nerdtree'
+Plugin 'sjl/badwolf'
+Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'mileszs/ack.vim'
+Plugin 'rking/ag.vim'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
 
+"Python stuff
+let g:pymode_rope = 0
+
+
+filetype on
 set background=dark
-colorscheme badwolf         " awesome colorscheme
+colorscheme badwolf    " awesome colorscheme
 syntax enable           " enable syntax processing
 
 " Spaces & Tabs
@@ -33,6 +54,7 @@ nnoremap <space> za
 set foldmethod=indent   " fold based on indent level
 
 "CtrlP settings
+let g:ctrlp_map = '<c-p>'
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
