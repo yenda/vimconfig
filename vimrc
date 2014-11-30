@@ -15,6 +15,8 @@ Plugin 'rking/ag.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
+Plugin 'itchyny/calendar.vim'
+
 
 "Python stuff
 let g:pymode_rope = 0
