@@ -5,7 +5,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Plugin 'klen/python-mode'
 Plugin 'scrooloose/nerdtree'
-Plugin 'sjl/badwolf'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/syntastic'
@@ -14,15 +14,26 @@ Plugin 'rking/ag.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
+Plugin 'lokaltog/vim-powerline'
 
 "Python stuff
 let g:pymode_rope = 0
 
 
 filetype on
-set background=dark
-colorscheme badwolf    " awesome colorscheme
+
+if has('gui_running')
+   set background=light
+else
+   set background=dark
+endif
+
 syntax enable           " enable syntax processing
+
+"powerline
+set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+set laststatus=2
+set t_Co=256
 
 " Spaces & Tabs
 set tabstop=4       " number of visual spaces per TAB
@@ -60,14 +71,32 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 "Tmux
-"" allows cursor change in tmux mode
+
 if exists('$TMUX')
-            let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-                let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-        else
-                    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-                        let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-                endif
+  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
+    let previous_winnr = winnr()
+    silent! execute "wincmd " . a:wincmd
+    if previous_winnr == winnr()
+      call system("tmux select-pane -" . a:tmuxdir)
+      redraw!
+    endif
+  endfunction
+
+  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+
+  nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
+  nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
+  nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
+  nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
+else
+  map <C-h> <C-w>h
+  map <C-j> <C-w>j
+  map <C-k> <C-w>k
+  map <C-l> <C-w>l
+endif
+let g:tmux_navigator_save_on_switch = 1
 
 "Backup
 set backup
@@ -76,5 +105,4 @@ set backupskip=/tmp/*,/private/tmp/*
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 
-autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
