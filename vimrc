@@ -4,7 +4,6 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
 Plugin 'klen/python-mode'
-Plugin 'lokaltog/powerline'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sjl/badwolf'
 Plugin 'tpope/vim-fugitive'
