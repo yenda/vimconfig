@@ -14,7 +14,10 @@ Plugin 'rking/ag.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
-Plugin 'lokaltog/vim-powerline'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+
 
 "Python stuff
 let g:pymode_rope = 0
@@ -31,7 +34,10 @@ endif
 syntax enable           " enable syntax processing
 
 "powerline
-set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 set laststatus=2
 set t_Co=256
 
